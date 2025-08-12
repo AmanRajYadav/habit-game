@@ -1,5 +1,5 @@
 /* Simple offline-first service worker for Habit Game */
-const CACHE_VERSION = 'habit-game-v2';
+const CACHE_VERSION = 'habit-game-v3';
 const APP_SHELL = [
   '/habit-game/',
   '/habit-game/index.html',

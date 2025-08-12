@@ -26,8 +26,10 @@ jobs:
           cache: 'npm'
       - name: Install
         run: npm ci
-      - name: Clear build cache
-        run: rm -rf dist node_modules/.vite
+      - name: Clear build cache and verify
+        run: |
+          rm -rf dist node_modules/.vite
+          echo "Cache cleared, starting fresh build"
       - name: Build
         run: npm run build
       - name: Upload artifact
