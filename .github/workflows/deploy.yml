@@ -11,49 +11,38 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
-  build:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
-      - name: Install
+      
+      - name: Install dependencies
         run: npm ci
-      - name: Clear build cache and verify
-        run: |
-          rm -rf dist node_modules/.vite
-          echo "Cache cleared, starting fresh build"
+      
       - name: Build
         run: npm run build
-      - name: Verify build output
-        run: |
-          echo "=== Build completed, checking dist folder ==="
-          ls -la dist/
-          echo "=== Contents of dist/index.html ==="
-          head -20 dist/index.html
-          echo "=== Checking for main.tsx reference ==="
-          grep -n "main.tsx" dist/index.html || echo "No main.tsx reference found (good)"
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Configure Pages
+      
+      - name: Setup Pages
         uses: actions/configure-pages@v5
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: './dist'
+      
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
