@@ -1,5 +1,5 @@
 /* Simple offline-first service worker for Habit Game */
-const CACHE_VERSION = 'habit-game-v1';
+const CACHE_VERSION = 'habit-game-v2';
 const APP_SHELL = [
   '/habit-game/',
   '/habit-game/index.html',
@@ -40,7 +40,7 @@ self.addEventListener('fetch', (event) => {
           caches.open(CACHE_VERSION).then((cache) => cache.put(request, copy));
           return response;
         })
-        .catch(() => caches.match(request).then((res) => res || caches.match('./index.html')))
+        .catch(() => caches.match(request).then((res) => res || caches.match('/habit-game/index.html')))
     );
     return;
   }
