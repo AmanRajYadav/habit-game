@@ -32,6 +32,14 @@ jobs:
           echo "Cache cleared, starting fresh build"
       - name: Build
         run: npm run build
+      - name: Verify build output
+        run: |
+          echo "=== Build completed, checking dist folder ==="
+          ls -la dist/
+          echo "=== Contents of dist/index.html ==="
+          head -20 dist/index.html
+          echo "=== Checking for main.tsx reference ==="
+          grep -n "main.tsx" dist/index.html || echo "No main.tsx reference found (good)"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
