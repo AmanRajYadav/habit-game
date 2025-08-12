@@ -11,3 +11,11 @@ createRoot(document.getElementById('root')!).render(
     </AuthProvider>
   </StrictMode>,
 )
+
+// Register service worker for offline support
+if ('serviceWorker' in navigator) {
+  const swPath = `${import.meta.env.BASE_URL || '/habit-game/'}sw.js`.replace('//', '/')
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register(swPath).catch(() => {})
+  })
+}

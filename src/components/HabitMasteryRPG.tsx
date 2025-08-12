@@ -5,6 +5,7 @@ import {
 import { useAuth } from '../lib/AuthProvider'
 import { fetchHabits, fetchDailyLogs, fetchProfile, upsertProfile, upsertHabit, upsertDailyLog, fetchAchievements, upsertAchievement, deleteHabit, fetchActiveChallenges, getWeeklyLeaderboard } from '../services/db'
 import { useRealtimeSync } from '../hooks/useRealtimeSync'
+import InstallPWAButton from './InstallPWAButton'
 
 type Habit = {
   id: string
@@ -536,9 +537,12 @@ const HabitMasteryRPG: React.FC = () => {
               <h1 className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-2xl font-bold text-transparent sm:text-4xl">Habit Mastery RPG</h1>
               <p className="mt-1 text-xs text-gray-400 sm:text-sm">Transform your life into an epic adventure</p>
             </div>
-            <button onClick={() => setShowAchievements((s) => !s)} className="rounded-xl bg-yellow-500/20 p-2 transition-all hover:bg-yellow-500/30 sm:p-3">
-              <Trophy className="h-5 w-5 text-yellow-400 sm:h-6 sm:w-6" />
-            </button>
+            <div className="flex items-center gap-2">
+              <InstallPWAButton />
+              <button onClick={() => setShowAchievements((s) => !s)} className="rounded-xl bg-yellow-500/20 p-2 transition-all hover:bg-yellow-500/30 sm:p-3">
+                <Trophy className="h-5 w-5 text-yellow-400 sm:h-6 sm:w-6" />
+              </button>
+            </div>
           </div>
           <div className="rounded-xl bg-slate-900/50 p-3 sm:p-4">
             <div className="mb-2 flex items-center justify-between">
