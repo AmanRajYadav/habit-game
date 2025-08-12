@@ -12,7 +12,8 @@ const SignIn: React.FC = () => {
     if (!supabase) return
     setLoading(true)
     setMessage(null)
-    const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.origin } })
+    const redirectUrl = import.meta.env.PROD ? 'https://amanrajyadav.github.io/habit-game/' : window.location.origin
+    const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: redirectUrl } })
     setLoading(false)
     if (error) setMessage(error.message)
     else setMessage('Check your email for the magic link.')

@@ -1,18 +1,17 @@
 {
   "name": "Habit Game",
   "short_name": "HabitGame",
-  "id": "/habit-game/",
-  "start_url": "/habit-game/",
-  "scope": "/habit-game/",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "display_override": ["standalone"],
   "background_color": "#0f172a",
   "theme_color": "#7c3aed",
   "icons": [
-    { "src": "/habit-game/App Icons/Assets.xcassets/AppIcon.appiconset/_/192.png",  "sizes": "192x192",   "type": "image/png", "purpose": "any maskable" },
-    { "src": "/habit-game/App Icons/Assets.xcassets/AppIcon.appiconset/_/196.png",  "sizes": "196x196",   "type": "image/png", "purpose": "any maskable" },
-    { "src": "/habit-game/App Icons/Assets.xcassets/AppIcon.appiconset/_/256.png",  "sizes": "256x256",   "type": "image/png" },
-    { "src": "/habit-game/App Icons/Assets.xcassets/AppIcon.appiconset/_/512.png",  "sizes": "512x512",   "type": "image/png", "purpose": "any maskable" }
+    { "src": "./App Icons/Assets.xcassets/AppIcon.appiconset/_/196.png",  "sizes": "196x196",   "type": "image/png", "purpose": "any maskable" },
+    { "src": "./App Icons/Assets.xcassets/AppIcon.appiconset/_/256.png",  "sizes": "256x256",   "type": "image/png" },
+    { "src": "./App Icons/Assets.xcassets/AppIcon.appiconset/_/512.png",  "sizes": "512x512",   "type": "image/png", "purpose": "any maskable" }
   ]
 }
 

@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev:*)",
+      "Bash(npm run build:*)",
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "WebFetch(domain:amanrajyadav.github.io)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
