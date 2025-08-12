@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+/* App shell sizing for mobile */
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
