@@ -14,7 +14,8 @@ createRoot(document.getElementById('root')!).render(
 
 // Register service worker for offline support
 if ('serviceWorker' in navigator) {
-  const swPath = `${import.meta.env.BASE_URL || '/habit-game/'}sw.js`.replace('//', '/')
+  const base = import.meta.env.BASE_URL || '/habit-game/'
+  const swPath = `${base}sw.js`.replace('//', '/')
   window.addEventListener('load', () => {
     navigator.serviceWorker.register(swPath).catch(() => {})
   })

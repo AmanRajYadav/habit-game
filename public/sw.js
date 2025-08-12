@@ -1,9 +1,9 @@
 /* Simple offline-first service worker for Habit Game */
 const CACHE_VERSION = 'habit-game-v1';
 const APP_SHELL = [
-  './',
-  './index.html',
-  './manifest.webmanifest',
+  '/habit-game/',
+  '/habit-game/index.html',
+  '/habit-game/manifest.webmanifest',
 ];
 
 self.addEventListener('install', (event) => {
