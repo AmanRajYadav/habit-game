@@ -292,9 +292,19 @@ const HabitMasteryRPG: React.FC = () => {
     
     if (todayLog.habits.includes(habitId)) {
       newLog = { ...todayLog, habits: todayLog.habits.filter((id) => id !== habitId) }
+      
+      // Only decrease streak if this habit was completed today (lastCompleted === today)
+      const wasCompletedToday = habit.lastCompleted === today
+      const newStreakCount = wasCompletedToday ? Math.max(0, habit.streakCount - 1) : habit.streakCount
+      
       const multiplier = getStreakMultiplier(habit.streakCount)
       xpChange = -(habit.xpValue * multiplier)
-      updatedHabit = { ...habit, streakCount: Math.max(0, habit.streakCount - 1), totalCompletions: Math.max(0, habit.totalCompletions - 1) }
+      updatedHabit = { 
+        ...habit, 
+        streakCount: newStreakCount, 
+        totalCompletions: Math.max(0, habit.totalCompletions - 1),
+        lastCompleted: wasCompletedToday ? null : habit.lastCompleted
+      }
       setHabits((prev) =>
         prev.map((h) =>
           h.id === habitId ? updatedHabit : h,
@@ -302,10 +312,21 @@ const HabitMasteryRPG: React.FC = () => {
       )
     } else {
       newLog = { ...todayLog, habits: [...todayLog.habits, habitId] }
-      const newStreakCount = habit.streakCount + 1
+      
+      // Only increment streak if this is a new day (not same day completion)
+      const lastCompletedDate = habit.lastCompleted
+      const isNewDay = !lastCompletedDate || lastCompletedDate !== today
+      const newStreakCount = isNewDay ? habit.streakCount + 1 : habit.streakCount
+      
       const multiplier = getStreakMultiplier(newStreakCount)
       xpChange = habit.xpValue * multiplier
-      updatedHabit = { ...habit, streakCount: newStreakCount, bestStreak: Math.max(habit.bestStreak, newStreakCount), totalCompletions: habit.totalCompletions + 1, lastCompleted: today }
+      updatedHabit = { 
+        ...habit, 
+        streakCount: newStreakCount, 
+        bestStreak: Math.max(habit.bestStreak, newStreakCount), 
+        totalCompletions: habit.totalCompletions + 1, 
+        lastCompleted: today 
+      }
       setHabits((prev) =>
         prev.map((h) =>
           h.id === habitId ? updatedHabit : h,
