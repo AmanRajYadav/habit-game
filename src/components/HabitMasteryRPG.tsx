@@ -288,13 +288,16 @@ const HabitMasteryRPG: React.FC = () => {
     if (!habit) return
     let newLog: DailyLogs[string]
     let xpChange = 0
+    let updatedHabit: Habit
+    
     if (todayLog.habits.includes(habitId)) {
       newLog = { ...todayLog, habits: todayLog.habits.filter((id) => id !== habitId) }
       const multiplier = getStreakMultiplier(habit.streakCount)
       xpChange = -(habit.xpValue * multiplier)
+      updatedHabit = { ...habit, streakCount: Math.max(0, habit.streakCount - 1), totalCompletions: Math.max(0, habit.totalCompletions - 1) }
       setHabits((prev) =>
         prev.map((h) =>
-          h.id === habitId ? { ...h, streakCount: Math.max(0, h.streakCount - 1), totalCompletions: Math.max(0, h.totalCompletions - 1) } : h,
+          h.id === habitId ? updatedHabit : h,
         ),
       )
     } else {
@@ -302,11 +305,10 @@ const HabitMasteryRPG: React.FC = () => {
       const newStreakCount = habit.streakCount + 1
       const multiplier = getStreakMultiplier(newStreakCount)
       xpChange = habit.xpValue * multiplier
+      updatedHabit = { ...habit, streakCount: newStreakCount, bestStreak: Math.max(habit.bestStreak, newStreakCount), totalCompletions: habit.totalCompletions + 1, lastCompleted: today }
       setHabits((prev) =>
         prev.map((h) =>
-          h.id === habitId
-            ? { ...h, streakCount: newStreakCount, bestStreak: Math.max(h.bestStreak, newStreakCount), totalCompletions: h.totalCompletions + 1, lastCompleted: today }
-            : h,
+          h.id === habitId ? updatedHabit : h,
         ),
       )
       showNotificationMsg(`+${xpChange} XP! (${multiplier}x multiplier)`, 'xp')
@@ -332,6 +334,21 @@ const HabitMasteryRPG: React.FC = () => {
     setDailyLogs((prev) => ({ ...prev, [today]: newLog }))
     if (user) {
       void upsertDailyLog({ user_id: user.id, date: today, habit_ids: newLog.habits, total_xp: newLog.totalXP, perfect_bonus_applied: newLog.perfectBonusApplied ?? false })
+      // Save updated habit stats to database
+      void upsertHabit({
+        id: updatedHabit.id,
+        user_id: user.id,
+        name: updatedHabit.name,
+        category: updatedHabit.category,
+        difficulty: updatedHabit.difficulty,
+        xp_value: updatedHabit.xpValue,
+        streak_count: updatedHabit.streakCount,
+        best_streak: updatedHabit.bestStreak,
+        total_completions: updatedHabit.totalCompletions,
+        last_completed: updatedHabit.lastCompleted,
+        status: updatedHabit.status,
+        created_at: updatedHabit.createdDate
+      })
     }
     setPlayerStats((prev) => {
       const newStats = { ...prev, totalXP: prev.totalXP + xpChange, currentXP: prev.currentXP + xpChange }
