@@ -12,7 +12,8 @@ const SignIn: React.FC = () => {
     if (!supabase) return
     setLoading(true)
     setMessage(null)
-    const redirectUrl = import.meta.env.PROD ? 'https://amanrajyadav.github.io/habit-game/' : window.location.origin
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    const redirectUrl = isLocalhost ? window.location.origin : 'https://amanrajyadav.github.io/habit-game/'
     const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: redirectUrl } })
     setLoading(false)
     if (error) setMessage(error.message)
