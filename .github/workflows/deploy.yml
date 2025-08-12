@@ -26,6 +26,8 @@ jobs:
           cache: 'npm'
       - name: Install
         run: npm ci
+      - name: Clear build cache
+        run: rm -rf dist node_modules/.vite
       - name: Build
         run: npm run build
       - name: Upload artifact
