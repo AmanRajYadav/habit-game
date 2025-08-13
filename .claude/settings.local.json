@@ -5,7 +5,9 @@
       "Bash(npm run build:*)",
       "Bash(git add:*)",
       "Bash(git push:*)",
-      "WebFetch(domain:amanrajyadav.github.io)"
+      "WebFetch(domain:amanrajyadav.github.io)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ],
     "deny": [],
     "ask": []
